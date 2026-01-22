@@ -1,135 +1,84 @@
-# rust.vim
+taylor.fish fork of rust.vim
+============================
 
-## Description
+This is a fork of [rust.vim][upstream] with an updated syntax highlighting file
+([syntax/rust.vim][syntax]).
 
-This is a Vim plugin that provides [Rust][r] file detection, syntax highlighting, formatting,
-[Syntastic][syn] integration, and more. It requires Vim 8 or higher for full functionality.
-Some things may not work on earlier versions. 
+For the original README, see [README.orig.md][orig].
 
-## Installation
+[upstream]: https://github.com/rust-lang/rust.vim
+[syntax]: syntax/rust.vim
+[orig]: README.orig.md
 
-For activating the full functionality, this plugin requires either the plugin
-manager or the `.vimrc` to have the following:
+Installation
+------------
 
-```vim
-syntax enable
-filetype plugin indent on
-```
-
-Most plugin managers don't do this automatically, so these statements are
-usually added by users in their `vimrc` _right after_ the plugin manager load
-section.
-
-### [Vim8 packages][vim8pack]
+Copy `syntax/rust.vim` to `~/.vim/syntax/`:
 
 ```sh
-git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
+git clone https://codeberg.org/taylordotfish/rust.vim
+mkdir -p ~/.vim/syntax
+cp rust.vim/syntax/rust.vim ~/.vim/syntax/
 ```
 
-### [Vundle][v]
+Changes
+-------
 
-```vim
-Plugin 'rust-lang/rust.vim'
-```
+* Added ability to customize which edition is used for highlighting.
+  Set `g:rust_edition` before the syntax file is loaded; e.g.,
+  `let g:rust_edition = 2021` or `let g:rust_edition = "latest"`.
+* Enum variants that happen to have the same name as a prelude item are no
+  longer highlighted; e.g., `enum Shape { Box, Sphere }` or
+  `let s = Shape::Box`. (Note that this also applies to associated types in
+  paths, as in `let x: <T as Trait>::String`.)
+* Added support for `safe fn`.
+* Added support for `&raw const` and `&raw mut`.
+* Added support for the `gen` keyword. (Fixes [#521].)
+* Added support for items added to the prelude in the 2021 and 2024 editions,
+  like `TryFrom` and `Future`.
+* Updated list of derive macros.
+* Keywords in positions where an item name is expected are now highlighted
+  (e.g., `fn do() {}` or `mod priv;`). (Fixes [#406].)
+* Added support for non-ASCII characters in identifiers (`Café::new()`).
+* Added support for `?` as a macro repetition operator (`$()?`).
+  (Fixes [#498].)
+* Added support for raw identifiers in paths and function calls (`r#foo()`).
+* `as` is now highlighted as a keyword rather than an operator. (Fixes [#493].)
+* Improved highlighting of `async`, `await`, `try`, and `dyn`.
+* Improved highlighting of `impl ... for ...` using proper parsing.
+* Improved detection of turbofish function calls (`f::<T>()`).
+* Improved parsing of attributes (fixes cases like `#[[]]`).
+* Fixed parsing of `/* */*` (previously parsed as a comment containing an
+  unclosed nested comment).
+* Improved detection of which Markdown code blocks should be highlighted as
+  Rust code in doc comments.
+* Fixed parsing of multiline attributes and macro repetition expressions
+  (`$(x)*`) inside code blocks in doc comments.
+* Fixed parsing of non-Rust code blocks in block doc comments (`/** */`).
+* Fixed parsing of doc comments containing an unclosed code block.
+* Leading `# ` characters in doc comment code blocks (to hide lines in
+  rustdoc’s output) are now highlighted.
+* Added option not to highlight code in doc comments:
+  `let g:rust_highlight_doc_code = 0` before the syntax file is loaded.
+  (Fixes [#407].)
+* Reduced stale highlighting when syntactic constructs span multiple
+  lines by setting `syn sync linebreaks` to 1.
+* Added a distinct syntax group for prelude structs instead of including
+  them in `rustTrait`.
+* Reduced false positives in highlighting of assert and panic macros
+  (`assertiveness!()`, `paniculate!()`).
+* Removed obsolete syntax.
 
-### [Pathogen][p]
+[#521]: https://github.com/rust-lang/rust.vim/pull/521
+[#406]: https://github.com/rust-lang/rust.vim/issues/406
+[#498]: https://github.com/rust-lang/rust.vim/pull/498
+[#493]: https://github.com/rust-lang/rust.vim/issues/493
+[#407]: https://github.com/rust-lang/rust.vim/issues/407
 
-```sh
-git clone --depth=1 https://github.com/rust-lang/rust.vim.git ~/.vim/bundle/rust.vim
-```
+License
+-------
 
-### [vim-plug][vp]
-
-```vim
-Plug 'rust-lang/rust.vim'
-```
-
-### [dein.vim][d]
-
-```vim
-call dein#add('rust-lang/rust.vim')
-```
-
-### [NeoBundle][nb]
-
-```vim
-NeoBundle 'rust-lang/rust.vim'
-```
-
-## Features
-
-### Error checking with [Syntastic][syn]
-
-`rust.vim` automatically registers `cargo` as a syntax checker with
-[Syntastic][syn], if nothing else is specified. See `:help rust-syntastic`
-for more details.
-
-### Source browsing with [Tagbar][tgbr]
-
-The installation of Tagbar along with [Universal Ctags][uctags] is recommended
-for a good Tagbar experience. For other kinds of setups, `rust.vim` tries to
-configure Tagbar to some degree.
-
-### Formatting with [rustfmt][rfmt]
-
-The `:RustFmt` command will format your code with
-[rustfmt][rfmt] if installed. `rustfmt` can be installed
-via `rustup component add rustfmt`.
-
-Placing `let g:rustfmt_autosave = 1` in your `~/.vimrc` will
-enable automatic running of `:RustFmt` when you save a buffer.
-
-Do `:help :RustFmt` for further formatting help and customization
-options.
-
-### [Playpen][pp] integration
-
-*Note:* This feature requires [webapi-vim][wav] to be installed.
-
-The `:RustPlay` command will send the current selection, or if
-nothing is selected the current buffer, to the [Rust playpen][pp].
-
-If you set g:rust_clip_command RustPlay will copy the url to the clipboard.
-
-- Mac:
-
-      let g:rust_clip_command = 'pbcopy'
-
-- Linux:
-
-      let g:rust_clip_command = 'xclip -selection clipboard'
-
-### Running a test under cursor
-
-In a Cargo project, the `:RustTest` command will run the test that is under the cursor.
-This is useful when your project is big and running all of the tests takes a long time.
-
-## Help
-
-Further help can be found in the documentation with `:Helptags` then `:help rust`.
-
-Detailed help can be found in the documentation with `:help rust`.
-Helptags (`:help helptags`) need to be generated for this plugin
-in order to navigate the help. Most plugin managers will do this
-automatically, but check their documentation if that is not the case.
-
-## License
-
-Like Rust, rust.vim is primarily distributed under the terms of both the MIT
-license and the Apache License (Version 2.0). See LICENSE-APACHE and
-LICENSE-MIT for details.
-
-[r]: https://www.rust-lang.org
-[v]: https://github.com/gmarik/vundle
-[vqs]: https://github.com/gmarik/vundle#quick-start
-[p]: https://github.com/tpope/vim-pathogen
-[nb]: https://github.com/Shougo/neobundle.vim
-[vp]: https://github.com/junegunn/vim-plug
-[d]: https://github.com/Shougo/dein.vim
-[rfmt]: https://github.com/rust-lang-nursery/rustfmt
-[syn]: https://github.com/scrooloose/syntastic
-[tgbr]: https://github.com/majutsushi/tagbar
-[uctags]: https://ctags.io
-[wav]: https://github.com/mattn/webapi-vim
-[pp]: https://play.rust-lang.org/
-[vim8pack]: http://vimhelp.appspot.com/repeat.txt.html#packages
+The changes in this repository are licensed under the same license as the
+original: your choice of either the [MIT license](LICENSE-MIT) or version 2 of
+the [Apache License](LICENSE-APACHE). For more information, see
+[README.orig.md][orig].
