@@ -48,6 +48,7 @@ Changes
 * Improved highlighting of `impl ... for ...` using proper parsing.
 * Improved detection of turbofish function calls (`f::<T>()`).
 * Improved parsing of attributes (fixes cases like `#[[]]`).
+* Fixed highlighting of successive reference-of operators (`&&x`).
 * Fixed parsing of `/* */*` (previously parsed as a comment containing an
   unclosed nested comment).
 * Improved detection of which Markdown code blocks should be highlighted as
