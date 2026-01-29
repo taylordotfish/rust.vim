@@ -78,8 +78,8 @@ syn keyword   rustRepeat for
 " Highlight `for` keyword in `impl ... for ... {}` statement.
 syn match     rustImpl /\<impl\>/ nextgroup=rustImplGenerics,rustImplPath skipwhite skipempty
 syn match     rustImplPath /\%(::\)\?\s*\K\k*\%(\s*\%(::\)\s*\K\k*\)*/ contained contains=TOP nextgroup=rustImplGenerics,rustImplFor skipwhite skipempty
-syn match     rustImplGenerics /\%(::\)\?</ contained contains=rustModPathSep,rustGenerics nextgroup=rustImplFor skipwhite skipempty
-syn keyword   rustImplFor for contained
+syn match     rustImplGenerics /\%(::\)\?\s*</ contained contains=rustModPathSep,rustGenerics nextgroup=rustImplPath,rustImplFor skipwhite skipempty
+syn match     rustImplFor /\s*\<for\>/hs=e-2 contained
 
 syn keyword   rustRepeat in
 syn keyword   rustTypedef type nextgroup=rustIdentifier skipwhite skipempty
