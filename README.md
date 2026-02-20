@@ -33,6 +33,7 @@ Changes
   paths, as in `let x: <T as Trait>::String`.)
 * Added support for `safe fn`.
 * Added support for `&raw const` and `&raw mut`.
+* Added support for `pub(in ...)`.
 * Added support for the `gen` keyword. (Fixes [#521].)
 * Added support for items added to the prelude in the 2021 and 2024 editions,
   like `TryFrom` and `Future`.
