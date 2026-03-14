@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Rust
 " Maintainer:   taylor.fish <contact@taylor.fish>
-" Last Change:  2026-01-28
+" Last Change:  2026-02-19
 " Repository:   https://codeberg.org/taylordotfish/rust.vim
 " Repository:   https://github.com/taylordotfish/rust.vim
 " License:      MIT OR Apache-2.0
