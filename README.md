@@ -27,24 +27,23 @@ Changes
 * Added ability to customize which edition is used for highlighting.
   Set `g:rust_edition` before the syntax file is loaded; e.g.,
   `let g:rust_edition = 2021` or `let g:rust_edition = "latest"`.
-* Enum variants that happen to have the same name as a prelude item are no
-  longer highlighted; e.g., `enum Shape { Box, Sphere }` or
-  `let s = Shape::Box`. (Note that this also applies to associated types in
-  paths, as in `let x: <T as Trait>::String`.)
 * Added support for `safe fn`.
 * Added support for `&raw const` and `&raw mut`.
 * Added support for `pub(in ...)`.
 * Added support for the `gen` keyword. (Fixes [#521].)
 * Added support for items added to the prelude in the 2021 and 2024 editions,
   like `TryFrom` and `Future`.
-* Updated list of derive macros.
 * Keywords in positions where an item name is expected are now highlighted
   (e.g., `fn do() {}` or `mod priv;`). (Fixes [#406].)
+* Fixed false positive highlighting of enum variants as prelude items; e.g.,
+  `Box` in `enum Shape { Box, Sphere }` or `let s = Shape::Box`. Note that this
+  also applies to associated types, as in `let x: <T as Trait>::String`.
 * Added support for non-ASCII characters in identifiers (`Café::new()`).
 * Added support for `?` as a macro repetition operator (`$()?`).
   (Fixes [#498].)
 * Added support for raw identifiers in paths and function calls (`r#foo()`).
 * `as` is now highlighted as a keyword rather than an operator. (Fixes [#493].)
+* Updated list of derive macros.
 * Improved highlighting of `async`, `await`, `try`, and `dyn`.
 * Improved highlighting of `impl ... for ...` using proper parsing.
 * Improved detection of turbofish function calls (`f::<T>()`).
