@@ -35,9 +35,11 @@ Changes
   like `TryFrom` and `Future`.
 * Keywords in positions where an item name is expected are now highlighted
   (e.g., `fn do() {}` or `mod priv;`). (Fixes [#406].)
+* Fixed false positive highlighting of child path components as built-in types;
+  e.g., `str` in `std::str::FromStr` is a module rather than a type.
 * Fixed false positive highlighting of enum variants as prelude items; e.g.,
-  `Box` in `enum Shape { Box, Sphere }` or `let s = Shape::Box`. Note that this
-  also applies to associated types, as in `let x: <T as Trait>::String`.
+  `Box` in `enum Shape { Box, Sphere }` or `let s = Shape::Box`. This also
+  applies to associated types, as in `let x: <T as Trait>::String`.
 * Added support for non-ASCII characters in identifiers (`Café::new()`).
 * Added support for `?` as a macro repetition operator (`$()?`).
   (Fixes [#498].)
