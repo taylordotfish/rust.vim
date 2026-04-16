@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Rust
 " Maintainer:   taylor.fish <contact@taylor.fish>
-" Last Change:  2026-02-19
+" Last Change:  2026-04-16
 " Repository:   https://codeberg.org/taylordotfish/rust.vim
 " Repository:   https://github.com/taylordotfish/rust.vim
 " License:      MIT OR Apache-2.0
@@ -218,7 +218,10 @@ syn keyword   rustSelf        self
 syn keyword   rustBoolean     true false
 
 syn match     rustModPath     "\<\%(r#\)\?\K\k*\ze\s*::"
-syn match     rustModPathSep  "::" nextgroup=rustTypeChild skipwhite
+syn match     rustModPathSep  "::" nextgroup=rustModChild,rustTypeChild skipwhite
+" In paths, prevent children from being highlighted as built-in types; e.g.,
+" `str` in `std::str::FromStr` is a module rather than a type.
+syn match     rustModChild    /\K\k*/ contained contains=TOP,rustType
 " In paths, prevent types' children from being highlighted as prelude items.
 " This is mostly for enum variants, as in `let s = Shape::Box`, but also
 " affects associated types. Detection of whether the parent is a type is based
