@@ -35,14 +35,16 @@ Changes
   like `TryFrom` and `Future`.
 * Keywords in positions where an item name is expected are now highlighted
   (e.g., `fn do() {}` or `mod priv;`). (Fixes [#406].)
+* Added support for non-ASCII characters in identifiers (`Café::new()`).
+* Added support for `?` as a macro repetition operator (`$()?`).
+  (Fixes [#498].)
+* Fixed highlighting of successive borrow operators (`&&x`).
+* Fixed highlighting of lifetime bounds (`'a: 'b`).
 * Fixed false positive highlighting of child path components as built-in types;
   e.g., `str` in `std::str::FromStr` is a module rather than a type.
 * Fixed false positive highlighting of enum variants as prelude items; e.g.,
   `Box` in `enum Shape { Box, Sphere }` or `let s = Shape::Box`. This also
   applies to associated types, as in `let x: <T as Trait>::String`.
-* Added support for non-ASCII characters in identifiers (`Café::new()`).
-* Added support for `?` as a macro repetition operator (`$()?`).
-  (Fixes [#498].)
 * Added support for raw identifiers in paths and function calls (`r#foo()`).
 * `as` is now highlighted as a keyword rather than an operator. (Fixes [#493].)
 * Updated list of derive macros.
@@ -50,7 +52,6 @@ Changes
 * Improved highlighting of `impl ... for ...` using proper parsing.
 * Improved detection of turbofish function calls (`f::<T>()`).
 * Improved parsing of attributes (fixes cases like `#[[]]`).
-* Fixed highlighting of successive borrow operators (`&&x`).
 * Fixed parsing of `/* */*` (previously parsed as a comment containing an
   unclosed nested comment).
 * Improved detection of which Markdown code blocks should be highlighted as
@@ -68,6 +69,7 @@ Changes
   lines by setting `syn sync linebreaks` to 1.
 * Added a distinct syntax group for prelude structs instead of including
   them in `rustTrait`.
+* Added highlighting for `?` in `?Sized`.
 * Reduced false positives in highlighting of assert and panic macros
   (`assertiveness!()`, `paniculate!()`).
 * Removed obsolete syntax.
