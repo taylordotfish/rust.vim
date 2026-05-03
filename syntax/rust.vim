@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Rust
 " Maintainer:   taylor.fish <contact@taylor.fish>
-" Last Change:  2026-04-16
+" Last Change:  2026-05-03
 " Repository:   https://codeberg.org/taylordotfish/rust.vim
 " Repository:   https://github.com/taylordotfish/rust.vim
 " License:      MIT OR Apache-2.0
@@ -249,6 +249,8 @@ syn match     rustOperator     display "\%(+\|-\|/\|*\|=\|\^\|&\||\|!\|>\|<\|%\)
 " matches the `|` characters as rustOperator, matching `||` as rustOperator
 " here should make no difference.
 syn match     rustOperator     display "&&\|||"
+" Optional trait bound, e.g., `?Sized`.
+syn match     rustOperator     display "?\K\@="
 " This one depends on consistent use of whitespace after binary-and and
 " boolean-and operators, and not after borrow operators.
 syn match     rustSigil        display /[&*]\+[^&*)= \t]\@=/
