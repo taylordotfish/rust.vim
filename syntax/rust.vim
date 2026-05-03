@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Rust
 " Maintainer:   taylor.fish <contact@taylor.fish>
-" Last Change:  2026-04-16
+" Last Change:  2026-05-03
 " Repository:   https://codeberg.org/taylordotfish/rust.vim
 " Repository:   https://github.com/taylordotfish/rust.vim
 " License:      MIT OR Apache-2.0
@@ -249,6 +249,8 @@ syn match     rustOperator     display "\%(+\|-\|/\|*\|=\|\^\|&\||\|!\|>\|<\|%\)
 " matches the `|` characters as rustOperator, matching `||` as rustOperator
 " here should make no difference.
 syn match     rustOperator     display "&&\|||"
+" Optional trait bound, e.g., `?Sized`.
+syn match     rustOperator     display "?\K\@="
 " This one depends on consistent use of whitespace after binary-and and
 " boolean-and operators, and not after borrow operators.
 syn match     rustSigil        display /[&*]\+[^&*)= \t]\@=/
@@ -318,7 +320,7 @@ syn region rustGenericLifetimeCandidate display start=/\%(<\|,\s*\)\@<='/ end=/[
 
 "rustLifetime must appear before rustCharacter, or chars will get the lifetime highlighting
 syn match     rustLifetime    display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
-syn match     rustLabel       display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*:"
+syn match     rustLabel       display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*:\ze\_s*\%({\|\%(loop\|while\|for\)\>\)"
 syn match     rustLabel       display "\%(\<\%(break\|continue\)\s*\)\@<=\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
 syn match   rustCharacterInvalid   display contained /b\?'\zs[\n\r\t']\ze'/
 " The groups negated here add up to 0-255 but nothing else (they do not seem to go beyond ASCII).
