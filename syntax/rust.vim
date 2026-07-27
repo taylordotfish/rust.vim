@@ -272,7 +272,7 @@ syn region    rustString      matchgroup=rustStringDelimiter start='b\?r\z(#*\)"
 " Match attributes with either arbitrary syntax or special highlighting for
 " derives. We still highlight strings and comments inside of the attribute.
 RustMulti syn region  rustAttribute matchgroup=rustAttribute start="#!\?\[" end="\]" contains=@rustAttributeContents,rustAttributeBalancedParens,rustAttributeBalancedCurly,rustAttributeBalancedBrackets,rustDerive
-RustMulti syn region  rustAttributeBalancedParens matchgroup=rustAttribute start="("rs=e end=")"re=s transparent contained contains=rustAttributeBalancedParens,@rustAttributeContents
+RustMulti syn region  rustAttributeBalancedParens matchgroup=rustAttribute start="("rs=e end=")"re=s transparent contained contains=rustAttributeBalancedParens,@rustAttributeContents,rustDerive
 RustMulti syn region  rustAttributeBalancedCurly matchgroup=rustAttribute start="{"rs=e end="}"re=s transparent contained contains=rustAttributeBalancedCurly,@rustAttributeContents
 RustMulti syn region  rustAttributeBalancedBrackets matchgroup=rustAttribute start="\["rs=e end="\]"re=s transparent contained contains=rustAttributeBalancedBrackets,@rustAttributeContents
 RustMulti syn cluster rustAttributeContents contains=rustString,rustCommentLine,rustCommentBlock,rustCommentLineDocError,rustCommentBlockDocError
