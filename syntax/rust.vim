@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Rust
 " Maintainer:   taylor.fish <contact@taylor.fish>
-" Last Change:  2026-05-03
+" Last Change:  2026-07-26
 " Repository:   https://codeberg.org/taylordotfish/rust.vim
 " Repository:   https://github.com/taylordotfish/rust.vim
 " License:      MIT OR Apache-2.0
@@ -183,6 +183,7 @@ syn keyword   rustType        f64 i8 i16 i32 i64 i128 str Self
 " Prelude types and traits {{{3
 syn keyword rustTrait Copy Send Sized Sync
 syn keyword rustTrait Drop Fn FnMut FnOnce
+syn keyword rustTrait AsyncFn AsyncFnMut AsyncFnOnce
 syn keyword rustStruct Box
 syn keyword rustTrait ToOwned
 syn keyword rustTrait Clone
